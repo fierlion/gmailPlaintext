@@ -7,8 +7,8 @@ def main(argv):
     fromAddress = ''
     messageSubject = ''
     messageText = ''
-    username = '' #insert gmail username
-    password = '' #insert gmail password
+    username = 'fierlion' #insert gmail username
+    password = 'Three!=3216' #insert gmail password
     hMess = "'test.py -t <toAddress> -f <fromAddress> -s <messageSubject> -m " \
             "<messageText>'"
     try:
@@ -31,9 +31,9 @@ def main(argv):
             messageText = arg
 
     #send email
-    header1 = "From: From person <%s>\r\nTo: To Person <%s>\r\n" \
-              "Subject: %s\r\n MIME-Version: 1.0\r\nContent-Type: text/plain; " \
-              "charset=\"utf-8\"\r\n" % (fromAddress, toAddress, messageSubject)
+    header1 = "From: From person <%s>\r\nTo: To Person <%s>\r\nSubject: %s\r\n" \
+              "MIME-Version: 1.0\r\nContent-Type: text/plain;\r\n" \
+              % (fromAddress, toAddress, messageSubject)
     message = header1 + messageText
     try:
         server = smtplib.SMTP('smtp.gmail.com:587')
