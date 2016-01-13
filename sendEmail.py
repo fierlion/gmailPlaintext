@@ -9,14 +9,17 @@ def main(argv):
     messageText = ''
     username = '' #insert gmail username
     password = '' #insert gmail password
+    hMess = "'test.py -t <toAddress> -f <fromAddress> -s <messageSubject> -m " \
+            "<messageText>'"
     try:
-        opts, args = getopt.getopt(argv,"ht:f:s:m:", ["to=","from=","subj=","mess="])
+        opts, args = getopt.getopt(argv,"ht:f:s:m:",
+        ["to=","from=","subj=","mess="])
     except getopt.GetoptError:
-        print 'test.py -t <toAddress> -f <fromAddress> -s <messageSubject> -m <messageText>'
+        print(hMess)
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print 'test.py -t <toAddress> -f <fromAddress> -s <messageSubject> -m <messageText>'
+            print(hMess)
             sys.exit()
         elif opt in ("-t", "--to"):
             toAddress = arg
@@ -28,8 +31,9 @@ def main(argv):
             messageText = arg
 
     #send email
-    header1 = "From: From person <%s>\r\nTo: To Person <%s>\r\nSubject: %s\r\n" \
-              "MIME-Version: 1.0\r\nContent-Type: text/plain; charset=\"utf-8\"\r\n" % (fromAddress, toAddress, messageSubject)
+    header1 = "From: From person <%s>\r\nTo: To Person <%s>\r\n" \
+              "Subject: %s\r\n MIME-Version: 1.0\r\nContent-Type: text/plain; " \
+              "charset=\"utf-8\"\r\n" % (fromAddress, toAddress, messageSubject)
     message = header1 + messageText
     try:
         server = smtplib.SMTP('smtp.gmail.com:587')
@@ -37,9 +41,9 @@ def main(argv):
         server.starttls()
         server.login(username,password)
         server.sendmail(toAddress, fromAddress, message)
-        print 'email successfully sent'
+        print('email successfully sent')
     except Exception as e:
-        print 'error: unable to send email; errortext: ' + str(e)
+        print('error: unable to send email; errortext: ' + str(e))
 
 if __name__ == "__main__":
     main(sys.argv[1:])
