@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import smtplib
 import sys
 import getopt
@@ -29,20 +27,19 @@ def main(argv):
         elif opt in ("-m", "--message"):
             messageText = arg
 
-        #send email
-        header1 = """From: From person <%s>
-        To: To Person <%s>
-        Subject: <%s>
-        MIME-Version: 1.0
-        Content-Type: text/plain
-        """ % (fromAddress, toAddress, messageSubject)
-        message = header1 + messageText
-        try:
-            server = smtplib.SMTP('smtp.gmail.com:587')
-            server.ehlo()
-            server.starttls()
-            server.login(username,password)
-            server.sendmail(toAddress, fromAddess, message)
-            print 'email successfully sent'
-        except Exception as e:
-            print 'error: unable to send email; errortext: ' + e
+    #send email
+    header1 = "From: From person <%s>\r\nTo: To Person <%s>\r\nSubject: %s\r\n" \
+              "MIME-Version: 1.0\r\nContent-Type: text/plain; charset=\"utf-8\"\r\n" % (fromAddress, toAddress, messageSubject)
+    message = header1 + messageText
+    try:
+        server = smtplib.SMTP('smtp.gmail.com:587')
+        server.ehlo()
+        server.starttls()
+        server.login(username,password)
+        server.sendmail(toAddress, fromAddress, message)
+        print 'email successfully sent'
+    except Exception as e:
+        print 'error: unable to send email; errortext: ' + str(e)
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
